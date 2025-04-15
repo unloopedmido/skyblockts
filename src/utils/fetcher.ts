@@ -1,7 +1,6 @@
 const BASE_URL = "https://api.hypixel.net/v2/skyblock/";
 
 export const fetcher = async (path: string) => {
-    console.log(`[SkyblockTS] Fetching ${path}`)
     const res = await fetch(`${BASE_URL}${path}`)
     if (!res.ok) throw new Error(`[SkyblockTS] ${res.status} ${res.statusText}`)
 
