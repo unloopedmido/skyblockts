@@ -31,5 +31,10 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/unloopedmido/skyblockts.git"
-  }
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ]
 }
