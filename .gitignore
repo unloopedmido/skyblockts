@@ -1,0 +1,11 @@
+node_modules/
+dist/
+coverage/
+*.log
+*.tsbuildinfo
+*.tgz
+*.zip
+*.tar.gz
+*-lock.json
+*-lock.yaml
+*.lock
