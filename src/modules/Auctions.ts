@@ -1,6 +1,5 @@
 import { SkyblockTS } from "../SkyblockTS";
 import { AuctionItem } from "../types/auction";
-import { fetcher } from "../utils/fetcher";
 
 export type Tier =
 	| "COMMON"
@@ -20,7 +19,7 @@ export class Auctions {
 		timestamp: 0,
 	};
 
-	constructor(private client: SkyblockTS) {}
+	constructor(private client: SkyblockTS) { }
 
 	private filterAuctions(
 		auctions: AuctionItem[],
@@ -57,7 +56,7 @@ export class Auctions {
 	private async getAuctionsWithCache(): Promise<AuctionItem[]> {
 		if (
 			this.cache.auctions &&
-			Date.now() - this.cache.timestamp < this.client.cacheTTL
+			Date.now() - this.cache.timestamp < this.client.config.cacheTTL
 		) {
 			return this.cache.auctions!;
 		}
@@ -135,9 +134,9 @@ export class Auctions {
 	 */
 	async all(): Promise<AuctionItem[]> {
 		try {
-			const initialData = await fetcher("auctions");
+			const initialData = await this.client.fetcher.fetch<{ totalPages: number, auctions: AuctionItem[] }>("auctions", false);
 			const { totalPages } = initialData;
-			const batchSize = this.client.batchSize;
+			const batchSize = this.client.config.batchSize;
 			let allAuctions: AuctionItem[] = [...initialData.auctions];
 
 			for (let i = 0; i < totalPages - 1; i += batchSize) {
@@ -145,7 +144,7 @@ export class Auctions {
 					length: Math.min(batchSize, totalPages - 1 - i),
 				}).map((_, idx) => {
 					const page = i + idx + 1;
-					return fetcher(`auctions?page=${page}`)
+					return this.client.fetcher.fetch<{auctions: AuctionItem[]}>(`auctions?page=${page}`, false)
 						.then((data) => data.auctions)
 						.catch((err) => {
 							console.error(`[SkyblockTS] Error fetching page ${page}:`, err);

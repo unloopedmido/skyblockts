@@ -1,10 +1,24 @@
 import { Auctions } from "./modules/Auctions";
+import { Profiles } from "./modules/Profiles";
+import Fetcher from "./utils/fetcher";
+
+export interface SkyblockTSConfig {
+	apiKey?: string;
+	cacheTTL: number;
+	batchSize: number;
+}
+
+export interface ConstructorConfig {
+	apiKey?: string;
+	cacheTTL?: number;
+	batchSize?: number;
+}
 
 export class SkyblockTS {
-	public apiKey?: string;
+	public config: SkyblockTSConfig;
 	public auctions: Auctions;
-	public cacheTTL: number;
-	public batchSize: number;
+	public profiles: Profiles;
+	public fetcher: Fetcher;
 
 	/**
 	 * @param config - Configuration object
@@ -13,11 +27,15 @@ export class SkyblockTS {
 	 * @param config.batchSize - Number of auctions to fetch in a single batch (default: 5)
 	 */
 	constructor(
-		config: { apiKey?: string; cacheTTL?: number; batchSize?: number } = {},
+		config: ConstructorConfig,
 	) {
-		this.apiKey = config.apiKey;
+		this.fetcher = new Fetcher(this);
 		this.auctions = new Auctions(this);
-		this.cacheTTL = config.cacheTTL || 1000 * 60 * 3; // 3 minutes
-		this.batchSize = config.batchSize || 5; // 5 calls per batch
+		this.profiles = new Profiles(this);
+		this.config = {
+			apiKey: config.apiKey,
+			cacheTTL: config.cacheTTL ?? 1000 * 60 * 3,
+			batchSize: config.batchSize ?? 5,
+		};
 	}
 }

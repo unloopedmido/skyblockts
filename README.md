@@ -13,7 +13,7 @@ A robust TypeScript wrapper for the Hypixel SkyBlock API, providing type-safe ac
 - **Easy to Use**: Simple and intuitive API for accessing Hypixel SkyBlock data
 - **Well Documented**: Comprehensive documentation with examples
 
-> **Note:** Currently, SkyblockTS only supports auctions. Support for bazaar, profiles, and more features are planned for the near future.
+> **Note:** Currently, SkyblockTS only supports auctions. Support for bazaar, and more features are planned for the near future.
 
 ## Installation
 
