@@ -1,24 +1,24 @@
-const BASE_URL = "https://api.hypixel.net/v2/skyblock/";
+import { SkyblockTS } from "../SkyblockTS";
 
-export const fetcher = async (path: string) => {
-	const res = await fetch(`${BASE_URL}${path}`);
-	if (!res.ok) throw new Error(`[SkyblockTS] ${res.status} ${res.statusText}`);
+export default class Fetcher {
+	private baseUrl = "https://api.hypixel.net/v2/skyblock/";
 
-	return res.json();
-};
+	constructor(private client: SkyblockTS) {}
 
-export const fetcherWithKey = async (path: string, apiKey: string) => {
-	const headers: Record<string, string> = {};
+	async fetch<T>(path: string, requiresKey: boolean = true): Promise<T> {
+		const apiKey = this.client.config.apiKey;
+		const headers: Record<string, string> = {};
 
-	if (!apiKey) {
-		throw new Error(
-			"[SkyblockTS] An API key is required to access this endpoint",
-		);
+		if (requiresKey && !apiKey) {
+			throw new Error(
+				"[SkyblockTS] An API key is required to access this endpoint",
+			);
+		}
+		if (apiKey) headers["API-Key"] = apiKey;
+
+		const res = await fetch(`${this.baseUrl}${path}`, { headers });
+		if (!res.ok) throw new Error(`[SkyblockTS] ${res.status} ${res.statusText} ${this.baseUrl}${path}`);
+
+		return res.json() as Promise<T>;
 	}
-	headers["API-Key"] = apiKey;
-
-	const res = await fetch(`${BASE_URL}${path}`, { headers });
-	if (!res.ok) throw new Error(`[SkyblockTS] ${res.status} ${res.statusText}`);
-
-	return res.json();
-};
+}
