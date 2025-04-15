@@ -9,7 +9,7 @@
 		"lint": "eslint . --ext .ts",
 		"lint:fix": "eslint . --ext .ts --fix",
 		"format": "prettier --write .",
-		"prepublish": "pnpm build && pnpm publish --access public"
+		"prepublish": "pnpm build"
 	},
 	"keywords": [],
 	"author": "Cored, Inc - cored.developments@gmail.com",
