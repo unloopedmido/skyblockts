@@ -28,28 +28,28 @@ pnpm add skyblockts
 ## Quick Start
 
 ```typescript
-import { SkyblockTS } from 'skyblockts';
+import { SkyblockTS } from "skyblockts";
 
 // Initialize the client with options
 const client = new SkyblockTS({
-  // Optional: Set a custom cache TTL in milliseconds (default: 60000)
-  cacheTTL: 120000,
-  // Optional: Set a custom batch size (default: 3)
-  batchSize: 10
+	// Optional: Set a custom cache TTL in milliseconds (default: 60000)
+	cacheTTL: 120000,
+	// Optional: Set a custom batch size (default: 3)
+	batchSize: 10,
 });
 
 // Get all auctions
 const allAuctions = await client.auctions.all();
 
 // Search for an item by name
-const hyperionAuctions = await client.auctions.search('hyperion');
+const hyperionAuctions = await client.auctions.search("hyperion");
 
 // Filter auctions with various criteria
 const filteredAuctions = await client.auctions.filter({
-  tier: 'LEGENDARY',
-  minPrice: 1000000,
-  maxPrice: 10000000,
-  binOnly: true,
+	tier: "LEGENDARY",
+	minPrice: 1000000,
+	maxPrice: 10000000,
+	binOnly: true,
 });
 ```
 
