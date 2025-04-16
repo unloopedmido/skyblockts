@@ -11,18 +11,6 @@ export class Profiles {
 
     constructor(private client: SkyblockTS) { }
 
-    private handleError(error: unknown): string {
-        if (error instanceof Error) {
-            if (error.message.includes("[SkyblockTS]")) {
-                throw error;
-            }
-
-            return (`[SkyblockTS] An unknown error occurred: ${error.message}`);
-        } else {
-            return (`[SkyblockTS] An unknown error occurred: ${String(error)}`);
-        }
-    }
-
     private setCache<T extends Profile | Profile[]>(key: string, data: T): void {
         const expiry = Date.now() + this.client.config.cacheTTL;
         this.cache.set(key, { data, expiry });
@@ -56,7 +44,7 @@ export class Profiles {
             this.setCache(cacheKey, profile);
             return profile;
         } catch (error) {
-            throw this.handleError(error);
+            throw error
         }
     }
 
@@ -78,7 +66,7 @@ export class Profiles {
             this.setCache(cacheKey, profiles);
             return profiles;
         } catch (error) {
-            throw this.handleError(error);
+            throw error
         }
     }
 
@@ -93,8 +81,13 @@ export class Profiles {
         if (cached) return cached;
 
         try {
+            // Use proxy only on browsers to avoid CORS issues
+            const isBrowser = typeof window !== "undefined";
+            const mojangURL = isBrowser
+                ? `https://corsproxy.io/?url=https://api.mojang.com/users/profiles/minecraft/${playerName}`
+                : `https://api.mojang.com/users/profiles/minecraft/${playerName}`; 
             const mojangResponse = await fetch(
-                `https://corsproxy.io/?url=https://api.mojang.com/users/profiles/minecraft/${playerName}`
+                mojangURL
             );
             if (!mojangResponse.ok) {
                 return [];
@@ -106,7 +99,7 @@ export class Profiles {
             this.setCache(cacheKey, profiles);
             return profiles;
         } catch (error) {
-            throw this.handleError(error);
+            throw error
         }
     }
 

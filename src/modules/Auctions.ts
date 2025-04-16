@@ -161,8 +161,6 @@ export class Auctions {
 
 			return allAuctions;
 		} catch (error) {
-			console.error(`[SkyblockTS] Error fetching auctions:`, error);
-
 			if (this.cache.auctions) {
 				console.warn(`[SkyblockTS] Returning cached auctions data`);
 				return this.cache.auctions;
