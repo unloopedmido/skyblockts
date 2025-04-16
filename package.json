@@ -1,6 +1,6 @@
 {
 	"name": "skyblockts",
-	"version": "0.2.2",
+	"version": "0.2.5",
 	"description": "A robust TypeScript wrapper for the Hypixel SkyBlock API, providing type-safe access to Hypixel SkyBlock data.",
 	"type": "module",
 	"scripts": {

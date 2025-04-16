@@ -27,15 +27,43 @@ pnpm add skyblockts
 
 ## Quick Start
 
+SkyblockTS now offers two ways to use the package:
+
+### Simple Usage (No Configuration)
+
+```typescript
+import { auctions, profiles, collections } from "skyblockts";
+
+// Use directly without initializing
+const allAuctions = await auctions.all();
+
+// Filter auctions with various criteria
+const filteredAuctions = await auctions.filter({
+    itemName: "Hyperion",
+    tier: "LEGENDARY",
+    minPrice: 1000000,
+    maxPrice: 10000000,
+    binOnly: true,
+});
+
+// Get a user's profiles by their UUID
+const userProfiles = await profiles.get("playerUUID");
+
+// Get all the collections within a category
+const farmingCollections = await collections.get("farming");
+```
+
+### Advanced Usage (With Configuration)
+
 ```typescript
 import { SkyblockTS } from "skyblockts";
 
 // Initialize the client with options
 const client = new SkyblockTS({
-	// Optional: Set a custom cache TTL in milliseconds (default: 60000)
-	cacheTTL: 120000,
-	// Optional: Set a custom batch size (default: 3)
-	batchSize: 10,
+    // Optional: Set a custom cache TTL in milliseconds (default: 60000)
+    cacheTTL: 120000,
+    // Optional: Set a custom batch size (default: 3)
+    batchSize: 10,
 });
 
 // Get all auctions
@@ -43,18 +71,18 @@ const allAuctions = await client.auctions.all();
 
 // Filter auctions with various criteria
 const filteredAuctions = await client.auctions.filter({
-	itemName: "Hyperion",
-	tier: "LEGENDARY",
-	minPrice: 1000000,
-	maxPrice: 10000000,
-	binOnly: true,
+    itemName: "Hyperion",
+    tier: "LEGENDARY",
+    minPrice: 1000000,
+    maxPrice: 10000000,
+    binOnly: true,
 });
 
 // Get a user's profiles by their UUID
 const userProfiles = await client.profiles.get("playerUUID");
 
 // Get all the collections within a category
-const collections = await client.collections.get("farming");
+const farmingCollections = await client.collections.get("farming");
 ```
 
 ## Upcoming Features
