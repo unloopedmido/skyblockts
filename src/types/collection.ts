@@ -6,10 +6,10 @@ export interface Collection {
 export interface CollectionItem {
     name: string;
     maxTiers: number;
-    tiers: Tier[];
+    tiers: CollectionTier[];
 }
 
-export interface Tier {
+export interface CollectionTier {
     tier: number;
     amountRequired: number;
     unlocks: string[]

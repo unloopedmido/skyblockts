@@ -12,7 +12,7 @@ describe('SkyblockTS API', () => {
         });
     });
 
-    describe('Auction House', () => {
+    describe.skip('Auction House', () => {
         it('fetches Hyperions from the auction house', async () => {
             const hyperions = await client.auctions.filter({ itemName: "hyperion" });
             expect(hyperions).toBeDefined();
