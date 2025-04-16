@@ -5,6 +5,8 @@ A robust TypeScript wrapper for the Hypixel SkyBlock API, providing type-safe ac
 [![NPM Version](https://img.shields.io/npm/v/skyblockts.svg)](https://www.npmjs.com/package/skyblockts)
 [![License](https://img.shields.io/github/license/unloopedmido/skyblockts.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-4.9%2B-blue)](https://www.typescriptlang.org/)
+[![Size](https://badgen.net/bundlephobia/min/skyblockts)](https://bundlephobia.com/package/skyblockts@latest)
+[![Downloads](https://img.shields.io/npm/dt/skyblockts.svg)](https://www.npmjs.com/package/skyblockts)
 
 ## Features
 
