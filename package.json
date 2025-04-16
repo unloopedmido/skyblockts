@@ -10,7 +10,7 @@
 		"lint:fix": "eslint . --ext .ts --fix",
 		"format": "prettier --write .",
 		"prepublish": "pnpm build",
-		"test": "vitest",
+		"test": "vitest run",
 		"prepare": "husky"
 	},
 	"keywords": [
