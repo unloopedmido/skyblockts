@@ -1,7 +1,7 @@
 {
 	"name": "skyblockts",
-	"version": "0.1.0",
-	"description": "",
+	"version": "0.2.0",
+	"description": "A robust TypeScript wrapper for the Hypixel SkyBlock API, providing type-safe access to Hypixel SkyBlock data.",
 	"type": "module",
 	"scripts": {
 		"dev": "tsup src/index.ts --watch",
@@ -9,17 +9,31 @@
 		"lint": "eslint . --ext .ts",
 		"lint:fix": "eslint . --ext .ts --fix",
 		"format": "prettier --write .",
-		"prepublish": "pnpm build"
+		"prepublish": "pnpm build",
+		"test": "vitest",
+		"prepare": "husky"
 	},
-	"keywords": [],
+	"keywords": [
+		"hypixel",
+		"skyblock",
+		"api",
+		"typescript",
+		"wrapper",
+		"hypixel-skyblock",
+		"hypixel-api"
+	],
 	"author": "Cored, Inc - cored.developments@gmail.com",
 	"license": "ISC",
 	"packageManager": "pnpm@10.8.1",
 	"devDependencies": {
+		"@vitest/ui": "^3.1.1",
+		"dotenv": "^16.5.0",
 		"eslint": "^9.24.0",
+		"husky": "^9.1.7",
 		"prettier": "^3.5.3",
 		"tsup": "^8.4.0",
-		"typescript": "^5.8.3"
+		"typescript": "^5.8.3",
+		"vitest": "^3.1.1"
 	},
 	"exports": {
 		".": {

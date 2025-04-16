@@ -1,9 +1,9 @@
 import { SkyblockTS } from "../SkyblockTS";
 
 export default class Fetcher {
-	private baseUrl = "https://api.hypixel.net/v2/skyblock/";
+	private baseUrl = "https://api.hypixel.net/v2/";
 
-	constructor(private client: SkyblockTS) {}
+	constructor(private client: SkyblockTS) { }
 
 	async fetch<T>(path: string, requiresKey: boolean = true): Promise<T> {
 		const apiKey = this.client.config.apiKey;
@@ -17,6 +17,10 @@ export default class Fetcher {
 		if (apiKey) headers["API-Key"] = apiKey;
 
 		const res = await fetch(`${this.baseUrl}${path}`, { headers });
+		if(res.status === 429) {
+			const json = await res.json();
+			throw new Error(`[SkyblockTS] Rate limit exceeded: ${json.cause}`);
+		}
 		if (!res.ok) throw new Error(`[SkyblockTS] ${res.status} ${res.statusText} ${this.baseUrl}${path}`);
 
 		return res.json() as Promise<T>;

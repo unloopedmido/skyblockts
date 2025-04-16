@@ -134,7 +134,7 @@ export class Auctions {
 	 */
 	async all(): Promise<AuctionItem[]> {
 		try {
-			const initialData = await this.client.fetcher.fetch<{ totalPages: number, auctions: AuctionItem[] }>("auctions", false);
+			const initialData = await this.client.fetcher.fetch<{ totalPages: number, auctions: AuctionItem[] }>("skyblock/auctions", false);
 			const { totalPages } = initialData;
 			const batchSize = this.client.config.batchSize;
 			let allAuctions: AuctionItem[] = [...initialData.auctions];
@@ -144,7 +144,7 @@ export class Auctions {
 					length: Math.min(batchSize, totalPages - 1 - i),
 				}).map((_, idx) => {
 					const page = i + idx + 1;
-					return this.client.fetcher.fetch<{auctions: AuctionItem[]}>(`auctions?page=${page}`, false)
+					return this.client.fetcher.fetch<{auctions: AuctionItem[]}>(`skyblock/auctions?page=${page}`, false)
 						.then((data) => data.auctions)
 						.catch((err) => {
 							console.error(`[SkyblockTS] Error fetching page ${page}:`, err);

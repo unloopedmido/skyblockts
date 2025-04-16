@@ -8,3 +8,4 @@ coverage/
 *-lock.json
 *-lock.yaml
 *.lock
+.env

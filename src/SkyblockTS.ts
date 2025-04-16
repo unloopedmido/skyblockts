@@ -1,4 +1,5 @@
 import { Auctions } from "./modules/Auctions";
+import { Collections } from "./modules/Collections";
 import { Profiles } from "./modules/Profiles";
 import Fetcher from "./utils/fetcher";
 
@@ -18,6 +19,7 @@ export class SkyblockTS {
 	public config: SkyblockTSConfig;
 	public auctions: Auctions;
 	public profiles: Profiles;
+	public collections: Collections;
 	public fetcher: Fetcher;
 
 	/**
@@ -27,15 +29,16 @@ export class SkyblockTS {
 	 * @param config.batchSize - Number of auctions to fetch in a single batch (default: 5)
 	 */
 	constructor(
-		config: ConstructorConfig,
+		config?: ConstructorConfig,
 	) {
 		this.fetcher = new Fetcher(this);
 		this.auctions = new Auctions(this);
 		this.profiles = new Profiles(this);
+		this.collections = new Collections(this);
 		this.config = {
-			apiKey: config.apiKey,
-			cacheTTL: config.cacheTTL ?? 1000 * 60 * 3,
-			batchSize: config.batchSize ?? 5,
+			apiKey: config?.apiKey,
+			cacheTTL: config?.cacheTTL ?? 1000 * 60 * 3,
+			batchSize: config?.batchSize ?? 5,
 		};
 	}
 }

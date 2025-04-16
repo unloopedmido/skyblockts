@@ -49,8 +49,8 @@ export class Profiles {
         if (cached) return cached;
 
         try {
-            const profile = await this.client.fetcher.fetch<{profile: Profile}>(
-                `profile?profile=${encodeURIComponent(profileUUID)}`
+            const profile = await this.client.fetcher.fetch<{ profile: Profile }>(
+                `skyblock/profile?profile=${encodeURIComponent(profileUUID)}`, true
             ).then((d) => d.profile);
 
             this.setCache(cacheKey, profile);
@@ -65,15 +65,16 @@ export class Profiles {
      * @param {string} playerUUID The UUID of the player.
      * @returns {Promise<Profile[]>} A promise that resolves to an array of profiles.
      */
-    async getProfiles(playerUUID: string): Promise<Profile[]> {
+    async getProfiles(playerUUID: string): Promise<Profile[] | []> {
         const cacheKey = `profiles-${playerUUID}`;
         const cached = this.getCache<Profile[]>(cacheKey);
         if (cached) return cached;
 
         try {
-            const profiles = await this.client.fetcher.fetch<{profiles: Profile[]}>(
-                `profiles?uuid=${encodeURIComponent(playerUUID)}`
+            const profiles = await this.client.fetcher.fetch<{ profiles: Profile[] }>(
+                `skyblock/profiles?uuid=${encodeURIComponent(playerUUID)}`, true
             ).then((d) => d.profiles);
+            if (!profiles || profiles.length === 0) return [];
             this.setCache(cacheKey, profiles);
             return profiles;
         } catch (error) {
@@ -86,7 +87,7 @@ export class Profiles {
      * @param {string} playerName The in-game name of the player.
      * @returns {Promise<Profile[]>} A promise that resolves to an array of profiles.
      */
-    async getProfilesByName(playerName: string): Promise<Profile[]> {
+    async getProfilesByName(playerName: string): Promise<Profile[] | []> {
         const cacheKey = `profilesByName-${playerName.toLowerCase()}`;
         const cached = this.getCache<Profile[]>(cacheKey);
         if (cached) return cached;
@@ -96,11 +97,12 @@ export class Profiles {
                 `https://api.mojang.com/users/profiles/minecraft/${playerName}`
             );
             if (!mojangResponse.ok) {
-                throw new Error(`Mojang API responded with status: ${mojangResponse.status}`);
+                return [];
             }
             const mojangData = await mojangResponse.json();
             const playerUUID = mojangData.id;
             const profiles = await this.getProfiles(playerUUID);
+            if (!profiles || profiles.length === 0) return [];
             this.setCache(cacheKey, profiles);
             return profiles;
         } catch (error) {
