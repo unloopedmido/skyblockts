@@ -94,7 +94,7 @@ export class Profiles {
 
         try {
             const mojangResponse = await fetch(
-                `https://api.mojang.com/users/profiles/minecraft/${playerName}`
+                `https://corsproxy.io/?url=https://api.mojang.com/users/profiles/minecraft/${playerName}`
             );
             if (!mojangResponse.ok) {
                 return [];
