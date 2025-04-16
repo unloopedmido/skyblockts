@@ -53,7 +53,7 @@ const filteredAuctions = await client.auctions.filter({
 });
 ```
 
-## API Documentation
+## API Documentation (Outdated, will be updated soon)
 
 ### SkyblockTS Class
 
