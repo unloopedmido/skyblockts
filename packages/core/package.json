@@ -1,0 +1,34 @@
+{
+	"name": "@skyblock-ts/core",
+	"version": "0.0.3",
+	"description": "Typed Node.js wrapper for the Hypixel Skyblock API",
+	"main": "dist/index.js",
+	"types": "./dist/index.d.ts",
+	"private": false,
+	"sideEffects": false,
+	"type": "module",
+	"scripts": {
+		"dev": "tsup src/index.ts --watch",
+		"build": "tsup",
+		"format": "prettier --write .",
+		"test": "vitest run",
+		"prepublishOnly": "pnpm build"
+	},
+	"files": [
+		"dist/**/*"
+	],
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
+		}
+	},
+	"dependencies": {
+		"dotenv": "^16.5.0"
+	},
+	"devDependencies": {
+		"tsup": "^8.4.0",
+		"typescript": "^5.8.3"
+	}
+}

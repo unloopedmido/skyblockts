@@ -1,18 +1,25 @@
 {
-	"name": "skyblockts",
-	"private": false,
-	"version": "0.2.5",
-	"description": "A robust TypeScript wrapper for the Hypixel SkyBlock API, providing type-safe access to Hypixel SkyBlock data.",
-	"type": "module",
+	"private": true,
+	"packageManager": "pnpm@10.8.1",
+	"license": "MIT",
+	"workspaces": [
+		"packages/*"
+	],
 	"scripts": {
-		"dev": "tsup src/index.ts --watch",
-		"build": "tsup",
-		"lint": "eslint . --ext .ts",
-		"lint:fix": "eslint . --ext .ts --fix",
-		"format": "prettier --write .",
-		"prepublish": "pnpm build",
-		"test": "vitest run",
-		"prepare": "husky"
+		"build": "pnpm -r run build",
+		"dev": "pnpm -r run dev",
+		"test": "pnpm -r run test",
+		"format": "pnpm -r run format"
+	},
+	"devDependencies": {
+		"@types/node": "^22.14.1",
+		"@vitest/ui": "^3.1.1",
+		"eslint": "^9.24.0",
+		"husky": "^9.1.7",
+		"prettier": "^3.5.3",
+		"tsup": "^8.4.0",
+		"typescript": "^5.8.3",
+		"vitest": "^3.1.1"
 	},
 	"keywords": [
 		"hypixel",
@@ -23,33 +30,21 @@
 		"hypixel-skyblock",
 		"hypixel-api"
 	],
-	"author": "Cored, Inc - cored.developments@gmail.com",
-	"license": "ISC",
-	"packageManager": "pnpm@10.8.1",
-	"devDependencies": {
-		"@types/node": "^22.14.1",
-		"@vitest/ui": "^3.1.1",
-		"dotenv": "^16.5.0",
-		"eslint": "^9.24.0",
-		"husky": "^9.1.7",
-		"prettier": "^3.5.3",
-		"tsup": "^8.4.0",
-		"typescript": "^5.8.3",
-		"vitest": "^3.1.1"
+	"author": {
+		"email": "cored.developments@gmail.com",
+		"name": "nonlooped",
+		"url": "https://github.com/unloopedmido"
 	},
-	"exports": {
-		".": {
-			"import": "./dist/index.js",
-			"types": "./dist/index.d.ts"
-		}
+	"repository": {
+		"directory": "packages/core",
+		"type": "git",
+		"url": "https://github.com/unloopedmido/skyblockts"
 	},
-	"types": "./dist/index.d.ts",
-	"main": "./dist/index.js",
-	"repository": "https://github.com/unloopedmido/skyblockts",
-	"files": [
-		"dist/**/*",
-		"README.md",
-		"LICENSE"
-	],
-	"sideEffects": false
+	"funding": {
+		"type": "github",
+		"url": "https://github.com/sponsors/unloopedmido"
+	},
+	"engines": {
+		"node": ">=16.0.0"
+	}
 }

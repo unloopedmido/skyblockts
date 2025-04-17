@@ -1,3 +1,5 @@
+import { ItemTier } from "./DataTypes";
+
 export interface Bidder {
 	auction_id: string;
 	bidder: string;
@@ -18,7 +20,7 @@ export interface AuctionItem {
 	item_tag: string | null;
 	extra: string;
 	category: string;
-	tier: string;
+	tier: ItemTier;
 	starting_bid: number;
 	item_bytes: string;
 	claimed: boolean;

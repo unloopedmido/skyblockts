@@ -77,7 +77,7 @@ export default function Navbar() {
                         <MenuIcon />
                     </Button>
                 </SheetTrigger>
-                <SheetContent side="bottom">
+                <SheetContent side="right">
                     <div className="flex flex-col gap-y-2 px-2 py-4 text-muted-foreground">
                         {pages.map((page) => (
                             <a

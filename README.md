@@ -1,116 +1,89 @@
-# SkyblockTS
+# skyblock‑ts
 
-A robust TypeScript wrapper for the Hypixel SkyBlock API, providing type-safe access to Hypixel SkyBlock data.
+A monorepo of TypeScript packages for working with the Hypixel SkyBlock API.
 
-[![NPM Version](https://img.shields.io/npm/v/skyblockts.svg)](https://www.npmjs.com/package/skyblockts)
-[![License](https://img.shields.io/github/license/unloopedmido/skyblockts.svg)](LICENSE)
-[![TypeScript](https://img.shields.io/badge/TypeScript-4.9%2B-blue)](https://www.typescriptlang.org/)
-[![Size](https://badgen.net/bundlephobia/min/skyblockts)](https://bundlephobia.com/package/skyblockts@latest)
-[![Downloads](https://img.shields.io/npm/dt/skyblockts.svg)](https://www.npmjs.com/package/skyblockts)
+- **@skyblock‑ts/core** – a zero‑opinion, fully typed Hypixel SkyBlock API client.  
+- **@skyblock‑ts/tools** – (coming soon) high‑level utilities built on `@skyblock‑ts/core` for caching, searching, filtering, and more.
 
-## Features
+[![MIT License](https://img.shields.io/github/license/unloopedmido/skyblockts.svg)](LICENSE)  
+[![Node.js ≥16](https://img.shields.io/badge/node-%3E%3D16.0.0-brightgreen.svg)](https://nodejs.org/)  
+[![TypeScript](https://img.shields.io/badge/TypeScript-4.9%2B-blue.svg)](https://www.typescriptlang.org/)
 
-- **Type-Safe**: Full TypeScript support with proper typing for all API responses
-- **Efficient Caching**: Smart caching strategy to minimize API calls
-- **Easy to Use**: Simple and intuitive API for accessing Hypixel SkyBlock data
-- **Well Documented**: Comprehensive documentation with examples
+## Packages
 
-> **Note:** Currently, SkyblockTS only supports auctions, profiles and collections. Support for more features will be added in the future.
+### @skyblock‑ts/core
 
-## Installation
+- Typed, promise‑based wrapper around the [Hypixel API’s SkyBlock endpoints](https://api.hypixel.net/).  
+- Full ESM support with auto‑generated `.d.ts` definitions.  
+- Zero runtime dependencies (except your own `fetch` or Node built‑ins).  
+- Strict, immutable response types (`readonly` fields & arrays).
+
+[![npm version](https://img.shields.io/npm/v/@skyblock-ts/core.svg)](https://www.npmjs.com/package/@skyblock-ts/core)
+
+Install and use:
 
 ```bash
-npm install skyblockts
+npm install @skyblock-ts/core
 # or
-yarn add skyblockts
-# or
-pnpm add skyblockts
+pnpm add @skyblock-ts/core
 ```
 
-## Quick Start
+```ts
+import { CoreClient, defaultClient } from "@skyblock-ts/core";
 
-SkyblockTS now offers two ways to use the package:
+// Option A: use the shared default client (reads API key from `process.env.HYPIXEL_API_KEY`)
+const news = await defaultClient.misc.news()
 
-### Simple Usage (No Configuration)
-
-```typescript
-import { auctions, profiles, collections } from "skyblockts";
-
-// Use directly without initializing
-const allAuctions = await auctions.all();
-
-// Filter auctions with various criteria
-const filteredAuctions = await auctions.filter({
-    itemName: "Hyperion",
-    tier: "LEGENDARY",
-    minPrice: 1000000,
-    maxPrice: 10000000,
-    binOnly: true,
-});
-
-// Get a user's profiles by their UUID
-const userProfiles = await profiles.get("playerUUID");
-
-// Get all the collections within a category
-const farmingCollections = await collections.get("farming");
+// Option B: customize your own client instance
+const client = new CoreClient({ APIKey: "YOUR_API_KEY_HERE" });
+const auctions = await client.auction.activeAuctions(0);
 ```
 
-### Advanced Usage (With Configuration)
+Browse the full API surface and response types in [`packages/core/src`](https://github.com/unloopedmido/skyblockts/tree/main/packages/core/src).
 
-```typescript
-import { SkyblockTS } from "skyblockts";
+---
 
-// Initialize the client with options
-const client = new SkyblockTS({
-    // Optional: Set a custom cache TTL in milliseconds (default: 60000)
-    cacheTTL: 120000,
-    // Optional: Set a custom batch size (default: 3)
-    batchSize: 10,
-});
+### @skyblock‑ts/tools (soon)
 
-// Get all auctions
-const allAuctions = await client.auctions.all();
+A set of batteries‑included utilities on top of `@skyblock‑ts/core`, featuring:
 
-// Filter auctions with various criteria
-const filteredAuctions = await client.auctions.filter({
-    itemName: "Hyperion",
-    tier: "LEGENDARY",
-    minPrice: 1000000,
-    maxPrice: 10000000,
-    binOnly: true,
-});
+- In‑memory caching with configurable TTL  
+- Auction filters & search (by item, price range, BIN only, etc.)  
+- Profile lookup helpers and batch fetching  
+- Convenience functions for commons SkyBlock calculations  
 
-// Get a user's profiles by their UUID
-const userProfiles = await client.profiles.get("playerUUID");
+_Released soon!_
 
-// Get all the collections within a category
-const farmingCollections = await client.collections.get("farming");
+## Installation (monorepo)
+
+If you clone this repo and want to work on all packages locally:
+
+```bash
+git clone https://github.com/unloopedmido/skyblockts.git
+cd skyblockts
+pnpm install
+pnpm build        # builds all workspaces
+pnpm test         # runs all tests
+pnpm dev          # watch mode for all packages
 ```
-
-## Upcoming Features
-
-SkyblockTS is actively being developed with the following features planned:
-
-- **Bazaar API**: Access to real-time bazaar data
-- **Skills & Stats**: Access player skills and statistics
-- **Dungeons**: Data related to dungeon runs and statistics
-- **More Utilities**: Helper functions for SkyBlock-specific calculations
-- **Documentation**: Improved documentation with more examples and use cases
 
 ## Contributing
 
-Contributions are welcome! Feel free to open issues or submit pull requests.
+We welcome issues, suggestions, and pull requests:
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+1. Fork the repo & create a topic branch  
+2. Commit your changes with clear, atomic messages  
+3. Run `pnpm lint && pnpm test` and ensure all checks pass  
+4. Open a PR against `main` with a description of your changes  
+
+Please review our [LICENSE](LICENSE) and [CONTRIBUTING.md](./CONTRIBUTING.md) (if added) before submitting.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](license) file for details.
+This project and all packages are MIT‑licensed. See [LICENSE](LICENSE) for full details.
 
 ## Acknowledgments
 
-- [Hypixel API](https://api.hypixel.net/) for providing the data
+- Hypixel for the public API  
+- The TypeScript community for excellent tooling  
+- All contributors and open‑source libraries that make this possible!

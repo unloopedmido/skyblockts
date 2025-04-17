@@ -1,7 +1,5 @@
 onlyBuiltDependencies:
   - esbuild
-  - sharp
 
 packages:
-  - docs
-  - .
+  - "packages/*"

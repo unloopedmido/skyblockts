@@ -1,11 +1,6 @@
 import { buttonVariants } from "@/components/ui/button";
 import { codeExample } from "@/constants/example";
-import {
-	CodeIcon,
-	CopyIcon,
-	DownloadIcon,
-	PackageIcon,
-} from "lucide-react";
+import { CodeIcon, CopyIcon, DownloadIcon, PackageIcon } from "lucide-react";
 import { Highlight, themes } from "prism-react-renderer";
 import { useEffect, useState } from "react";
 
@@ -14,12 +9,18 @@ export default function Home() {
 		version: string;
 		downloads: number;
 	} | null>(null);
+	const [loadingStats, setLoadingStats] = useState(true);
 
 	useEffect(() => {
-		fetch("/api/npm-stats")
-			.then((res) => res.json())
-			.then(setStats)
-			.catch(console.error);
+		try {
+			fetch("/api/npm-stats")
+				.then((res) => res.json())
+				.then(setStats);
+		} catch (error) {
+			console.error("Error fetching npm stats:", error);
+		} finally {
+			setLoadingStats(false);
+		}
 	}, []);
 
 	return (
@@ -56,15 +57,21 @@ export default function Home() {
 						</button>
 					</div>
 				</div>
-				{stats && (
+				{loadingStats ? (
+					<div className="flex justify-center gap-4 text-sm text-muted-foreground mt-2">
+						<div className="flex items-center gap-1">
+							<span>Loading package information...</span>
+						</div>
+					</div>
+				) : (
 					<div className="flex justify-center gap-4 text-sm text-muted-foreground mt-2">
 						<div className="flex items-center gap-1">
 							<DownloadIcon className="size-4" />
-							<span>{stats.downloads.toLocaleString()} weekly downloads</span>
+							<span>{stats?.downloads.toLocaleString()} weekly downloads</span>
 						</div>
 						<div className="flex items-center gap-1">
 							<PackageIcon className="size-4" />
-							<span>v{stats.version}</span>
+							<span>v{stats?.version}</span>
 						</div>
 					</div>
 				)}
