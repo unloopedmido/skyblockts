@@ -1,6 +1,6 @@
 {
 	"name": "@skyblock-ts/core",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "Typed Node.js wrapper for the Hypixel Skyblock API",
 	"main": "dist/index.js",
 	"types": "./dist/index.d.ts",
@@ -30,5 +30,10 @@
 	"devDependencies": {
 		"tsup": "^8.4.0",
 		"typescript": "^5.8.3"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/unloopedmido/skyblockts",
+		"directory": "packages/core"
 	}
 }
