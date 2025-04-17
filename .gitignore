@@ -10,3 +10,4 @@ coverage/
 *-lock.yaml
 *.lock
 .env
+.npmrc

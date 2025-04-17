@@ -1,25 +1,26 @@
 import { buttonVariants } from "@/components/ui/button";
-import { CodeIcon, CopyIcon } from "lucide-react";
+import { codeExample } from "@/constants/example";
+import {
+	CodeIcon,
+	CopyIcon,
+	DownloadIcon,
+	PackageIcon,
+} from "lucide-react";
 import { Highlight, themes } from "prism-react-renderer";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-	const codeExample = `import { auctions, profiles, collections } from "skyblockts";
+	const [stats, setStats] = useState<{
+		version: string;
+		downloads: number;
+	} | null>(null);
 
-// Get all the auctions from the auction house
-const allAuctions != await auctions.all();
-
-// Filter auctions with various criteria
-const filteredAuctions = await auctions.filter({
-    itemName: "Hyperion",
-    tier: "LEGENDARY",
-    binOnly: true,
-});
-
-// Get a user's profiles by their UUID
-const userProfiles = await profiles.get("playerUUID");
-
-// Get all the collections within a category
-const farmingCollections = await collections.get("farming");`;
+	useEffect(() => {
+		fetch("/api/npm-stats")
+			.then((res) => res.json())
+			.then(setStats)
+			.catch(console.error);
+	}, []);
 
 	return (
 		<div className="min-h-screen grid grid-cols-1 xl:grid-cols-2 justify-items-center p-3 place-items-center justify-center">
@@ -40,7 +41,7 @@ const farmingCollections = await collections.get("farming");`;
 					<a className={buttonVariants({ size: "lg" })} href="/docs">
 						Get Started
 					</a>
-					<div className="font-code rounded-md p-2 bg-neutral-200 dark:bg-slate-800 flex items-center justify-between">
+					<div className="font-code rounded-md p-2 bg-neutral-300 dark:bg-slate-800 flex items-center justify-between">
 						<span>
 							<CodeIcon className="size-5" />
 						</span>
@@ -55,6 +56,18 @@ const farmingCollections = await collections.get("farming");`;
 						</button>
 					</div>
 				</div>
+				{stats && (
+					<div className="flex justify-center gap-4 text-sm text-muted-foreground mt-2">
+						<div className="flex items-center gap-1">
+							<DownloadIcon className="size-4" />
+							<span>{stats.downloads.toLocaleString()} weekly downloads</span>
+						</div>
+						<div className="flex items-center gap-1">
+							<PackageIcon className="size-4" />
+							<span>v{stats.version}</span>
+						</div>
+					</div>
+				)}
 			</div>
 
 			<div className="w-full max-w-xl mt-16 px-4">
