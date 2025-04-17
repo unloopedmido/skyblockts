@@ -1,5 +1,5 @@
 {
-	"private": true,
+	"private": false,
 	"packageManager": "pnpm@10.8.1",
 	"license": "MIT",
 	"workspaces": [
