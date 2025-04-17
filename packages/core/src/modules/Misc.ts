@@ -23,6 +23,17 @@ type NewsResponse = Readonly<{
     items: NewsItem[];
 }>;
 
+type ActiveUpcomingFireSalesResponse = Readonly<{
+    success: boolean
+    sales: readonly Readonly<{
+        item_id: string
+        start: number
+        end: number
+        amount: number
+        price: number
+    }>[]
+}>
+
 export class Misc {
     constructor(private client: CoreClient) { }
 
@@ -48,5 +59,13 @@ export class Misc {
      */
     async currentBingoEvent(): Promise<CurrentBingoEventResponse> {
         return this.client.doGet<CurrentBingoEventResponse>("resources/skyblock/bingo");
+    }
+
+    /**
+     * @returns {ActiveUpcomingFireSalesResponse} Retrieve the currently active or upcoming Fire Sales for SkyBlock.
+     * @link https://api.hypixel.net/#tag/SkyBlock/paths/~1v2~1skyblock~1firesales/get
+     */
+    async activeUpcomingFireSales(): Promise<ActiveUpcomingFireSalesResponse> {
+        return this.client.fetcher.fetch<ActiveUpcomingFireSalesResponse>(`skyblock/firesales`)
     }
 }

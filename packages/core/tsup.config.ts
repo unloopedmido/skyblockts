@@ -6,6 +6,5 @@ export default defineConfig({
 	dts: true,
 	clean: true,
 	sourcemap: true,
-	external: ["@types/node", "dotenv"],
 	tsconfig: "./tsconfig.json"
 });
