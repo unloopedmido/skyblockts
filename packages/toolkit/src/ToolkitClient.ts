@@ -1,5 +1,7 @@
 import { CoreClient, ClientConfig } from '@skyblock-ts/core';
 import { Auctions } from './modules/Auctions';
+import { Profiles } from './modules/Profiles';
+import { Bazaar } from './modules/Bazaar';
 
 export interface ToolkitClientConfig extends ClientConfig {
     cacheTTL?: number;
@@ -15,9 +17,13 @@ export class ToolkitClient {
 
     // Modules
     public auctions: Auctions;
+    public profiles: Profiles;
+    public Bazaar: Bazaar;
 
     constructor(config: ToolkitClientConfig = {}) {
         this.auctions = new Auctions(this);
+        this.profiles = new Profiles(this);
+        this.Bazaar = new Bazaar(this);
 
         this.config = config;
         this.core = new CoreClient(config);
