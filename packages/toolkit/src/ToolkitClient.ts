@@ -18,12 +18,12 @@ export class ToolkitClient {
     // Modules
     public auctions: Auctions;
     public profiles: Profiles;
-    public Bazaar: Bazaar;
+    public bazaar: Bazaar;
 
     constructor(config: ToolkitClientConfig = {}) {
         this.auctions = new Auctions(this);
         this.profiles = new Profiles(this);
-        this.Bazaar = new Bazaar(this);
+        this.bazaar = new Bazaar(this);
 
         this.config = config;
         this.core = new CoreClient(config);
