@@ -4,7 +4,7 @@ import { BazaarItem } from "../types/BazaarTypes";
 type BazaarResponse = Readonly<{
     success: boolean;
     lastUpdated: number;
-    products: BazaarItem[];
+    products: Record<string, BazaarItem>;
 }>;
 
 export class Bazaar {

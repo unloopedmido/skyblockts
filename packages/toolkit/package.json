@@ -1,7 +1,7 @@
 {
-	"name": "@skyblock-ts/core",
-	"version": "0.0.6",
-	"description": "Typed Node.js wrapper for the Hypixel Skyblock API",
+	"name": "@skyblock-ts/toolkit",
+	"version": "0.0.1",
+	"description": "Lightweight toolkit built on @skyblock-ts/core with high-level utility functions for the Hypixel Skyblock API.",
 	"main": "dist/index.js",
 	"types": "./dist/index.d.ts",
 	"private": false,
@@ -25,13 +25,16 @@
 		}
 	},
 	"devDependencies": {
+		"dotenv": "^16.5.0",
 		"tsup": "^8.4.0",
-		"typescript": "^5.8.3",
-		"dotenv": "^16.5.0"
+		"typescript": "^5.8.3"
 	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/unloopedmido/skyblockts",
-		"directory": "packages/core"
+		"directory": "packages/toolkit"
+	},
+	"dependencies": {
+		"@skyblock-ts/core": "^0.0.6"
 	}
 }
