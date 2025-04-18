@@ -1,6 +1,6 @@
 {
 	"name": "@skyblock-ts/toolkit",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "Lightweight toolkit built on @skyblock-ts/core with high-level utility functions for the Hypixel Skyblock API.",
 	"main": "dist/index.js",
 	"types": "./dist/index.d.ts",
