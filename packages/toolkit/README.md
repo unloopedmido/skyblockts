@@ -26,17 +26,17 @@ import { ToolkitClient } from "@skyblock-ts/toolkit";
 const client = new ToolkitClient({ APIKey: "MY_KEY", batchSize: 20, cacheTTL: 300_000 });
 
 async function main() {
-  // — Auctions
+  // - Auctions
   const all = await client.auctions.all();
   console.log("Total auctions:", all.length);
 
   const cheapSwords = await client.auctions.get({ itemName: "HYPERION", maxPrice: 1_000_000_000 });
   console.log("Cheap hyperions:", cheapSwords.length);
 
-  const bestBin = await client.auctions.lowestBin({ itemName: "ENCHANTED_GOLD" });
+  const bestBin = await client.auctions.lowestBIN({ itemName: "ENCHANTED_GOLD" });
   console.log("Lowest ENCHANTED_GOLD BIN:", bestBin?.starting_bid);
 
-  // — Profiles
+  // - Profiles
   const uuid = await client.profiles.uuidForName("Notch");
   console.log("Notch’s UUID:", uuid);
 
@@ -46,12 +46,24 @@ async function main() {
   const active = await client.profiles.getActiveProfile(uuid!);
   console.log("Active profile member data:", active);
 
-  // — Bazaar
+  // - Bazaar
   const bazaar = await client.bazaar.listProducts();
   console.log("Bazaar items:", Object.keys(bazaar).length);
 
   const gold = await client.bazaar.getProduct("ENCHANTED_GOLD");
   console.log("Enchanted Gold buy price:", gold?.buy_summary[0].pricePerUnit);
+
+  // - Data (items, collections, skills)
+  const item = await client.data.getItemById("FARM_ARMOR_CHESTPLATE");
+  const skill = await client.data.getSkill("FARMING");
+
+  // - Misc (news, election, bingo, firesales)
+  const news = await client.misc.getNews();
+  const firesales = await client.misc.getFiresales();
+
+  // - Profile extras (museum, garden, bingo)
+  const museum = await client.profiles.getMuseum(profileId);
+  const bingoEvents = await client.profiles.getBingoData(uuid!);
 }
 
 main().catch(console.error);
@@ -63,8 +75,8 @@ main().catch(console.error);
 
 - `all(): Promise<AuctionItem[]>`  
 - `get(filter: AuctionFilter): Promise<AuctionItem[]>`  
-- `lowestBin(filter: AuctionFilter): Promise<AuctionItem \| null>`  
-- `lowestBins(filters: AuctionFilter[]): Promise<Record<string, number>>`  
+- `lowestBIN(filter: AuctionFilter): Promise<AuctionItem \| null>`  
+- `lowestBINs(filters: AuctionFilter[]): Promise<Record<string, number>>`  
 - `averagePrice(filter: AuctionFilter): Promise<number>`
 
 ### Profiles
@@ -73,14 +85,35 @@ main().catch(console.error);
 - `listProfilesByUuid(uuid: string): Promise<ProfileItem[]>`  
 - `listProfilesByName(name: string): Promise<ProfileItem[]>`  
 - `getProfileById(profileId: string): Promise<ProfileItem \| null>`  
-- `getActiveProfile(uuid: string): Promise<ProfileMember \| null>`
+- `getActiveProfile(uuid: string): Promise<ProfileItem \| null>`
+
+- `getMuseum(profileId: string): Promise<Record<string, MuseumMember> \| null>`
+- `getGarden(profileId: string): Promise<GardenItem \| null>`
+- `getBingoData(uuid: string): Promise<BingoEvent[]>`
 
 ### Bazaar
 
 - `listProducts(): Promise<Record<string, BazaarItem>>`  
-- `getProduct(key: string): Promise<BazaarItem \| null>`
+- `getProduct(key: string): Promise<BazaarItem \| null>`
 
-> **Cache:** By default results are cached in memory for `cacheTTL` ms (default: 3 minutes).  
+### Data
+
+- `listItems(): Promise<ItemItem[]>`
+- `getItemById(id: string): Promise<ItemItem \| null>`
+- `getItemsByMaterial(material: string): Promise<ItemItem[]>`
+- `listCollections(): Promise<Record<string, CollectionItem>>`
+- `getCollection(id: string): Promise<CollectionItem \| null>`
+- `listSkills(): Promise<Record<string, SkillItem>>`
+- `getSkill(id: string): Promise<SkillItem \| null>`
+
+### Misc
+
+- `getNews(): Promise<NewsItem[]>` (requires API key)
+- `getElection(): Promise<{ mayor: Mayor; current: Election }>`
+- `getCurrentBingoEvent(): Promise<... \| null>`
+- `getFiresales(): Promise<FireSaleItem[]>`
+
+> **Cache:** By default results are cached in memory for `cacheTTL` ms (default: 3 minutes).  
 > **Batching:** Auction pages are fetched in parallel batches of `batchSize` (default: 10).
 
 ## API Reference
@@ -92,4 +125,4 @@ or peek at the source under [`src/`](https://github.com/…/packages/toolkit/src
 
 Made with ❤️ by [@unloopedmido](https://github.com/unloopedmido/skyblockts).
 
-MIT License — see [LICENSE](LICENSE).
+MIT License - see [LICENSE](LICENSE).

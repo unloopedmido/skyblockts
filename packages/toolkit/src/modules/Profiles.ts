@@ -1,5 +1,10 @@
 import { ToolkitClient } from "../ToolkitClient";
-import { ProfileItem } from '@skyblock-ts/core'
+import type {
+    BingoEvent,
+    GardenItem,
+    MuseumMember,
+    ProfileItem,
+} from "@skyblock-ts/core";
 
 export class Profiles {
     constructor(private client: ToolkitClient) { }
@@ -12,7 +17,7 @@ export class Profiles {
     async uuidForName(name: string): Promise<string | null> {
         try {
             return this.client.getCached(`uuid:${name}`, async () => {
-                const response = await fetch(`https://api.mojang.com/users/profiles/minecraft/pohna${name}`);
+                const response = await fetch(`https://api.mojang.com/users/profiles/minecraft/${name}`);
 
                 return (await response.json()).id ?? null;
             });
@@ -90,5 +95,39 @@ export class Profiles {
         }
 
         return activeProfile;
+    }
+
+    /**
+     * Museum data for all members of the profile (cached). Requires API key.
+     */
+    async getMuseum(profileId: string): Promise<Record<string, MuseumMember> | null> {
+        return this.client.getCached(`museum:${profileId}`, async () => {
+            const res = await this.client.core.profile.museumDataByProfileID(profileId);
+            return res.profile ?? null;
+        });
+    }
+
+    /**
+     * Garden data for the profile (cached). Requires API key. Returns null if 404.
+     */
+    async getGarden(profileId: string): Promise<GardenItem | null> {
+        return this.client.getCached(`garden:${profileId}`, async () => {
+            try {
+                const res = await this.client.core.profile.gardenDataByProfileID(profileId);
+                return res.garden ?? null;
+            } catch {
+                return null;
+            }
+        });
+    }
+
+    /**
+     * Bingo event participation for the player (cached). Requires API key.
+     */
+    async getBingoData(uuid: string): Promise<BingoEvent[]> {
+        return this.client.getCached(`bingo:${uuid}`, async () => {
+            const res = await this.client.core.profile.bingoDataByPlayer(uuid);
+            return [...(res.events ?? [])];
+        });
     }
 }
