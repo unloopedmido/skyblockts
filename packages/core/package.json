@@ -1,6 +1,6 @@
 {
 	"name": "@skyblock-ts/core",
-	"version": "0.0.7",
+	"version": "0.0.71",
 	"description": "Typed Node.js wrapper for the Hypixel Skyblock API",
 	"main": "dist/index.js",
 	"types": "./dist/index.d.ts",
