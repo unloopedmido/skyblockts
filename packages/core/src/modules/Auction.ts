@@ -1,16 +1,25 @@
 import type { CoreClient } from "../CoreClient";
-import type { AuctionItem } from "../types/AuctionTypes";
+import type { AuctionItem, EndedAuction } from "../types/AuctionTypes";
 
-type BaseResponse = Readonly<{
+type RequestAuctionsResponse = Readonly<{
     success: boolean;
     lastUpdated: number;
     auctions: AuctionItem[];
 }>;
 
-type ActiveAuctionsResponse = BaseResponse & Readonly<{
+type ActiveAuctionsResponse = Readonly<{
+    success: boolean;
     page: number;
     totalPages: number;
     totalAuctions: number;
+    lastUpdated: number;
+    auctions: AuctionItem[];
+}>;
+
+type RecentlyEndedAuctionsResponse = Readonly<{
+    success: boolean;
+    lastUpdated: number;
+    auctions: readonly EndedAuction[];
 }>;
 
 type AuctionFilter =
@@ -19,43 +28,33 @@ type AuctionFilter =
     | { profile: string; uuid?: never; player?: never };
 
 export class Auction {
-    constructor(private client: CoreClient) { }
+    constructor(private client: CoreClient) {}
 
     /**
-     * @param uuid The auction UUID that you wish to request
-     * @param player The player UUID that you wish to request
-     * @param profile The profile UUID that you wish to request
-     * @returns {RequestAuctionsResponse} Returns the auctions selected by the provided query. Only one query parameter can be used in a single request, and cannot be filtered by multiple.
-    * @link https://api.hypixel.net/#tag/SkyBlock/paths/~1v2~1skyblock~1auction/get 
-    */
-    async requestAuctions(filter: AuctionFilter)
-        : Promise<BaseResponse> {
-        const params = new URLSearchParams(Object.entries(filter));
-
-        return this.client.doGet<BaseResponse>(
-            `skyblock/auction?${params.toString()}`
-        );
+     * Request auction(s) by auction UUID, player UUID, or profile UUID. Only one query parameter per request.
+     * Requires API key.
+     * @link https://api.hypixel.net/#tag/SkyBlock/paths/~1v2~1skyblock~1auction/get
+     */
+    async requestAuctions(filter: AuctionFilter): Promise<RequestAuctionsResponse> {
+        const params = new URLSearchParams(Object.entries(filter) as [string, string][]);
+        return this.client.doGet<RequestAuctionsResponse>(`skyblock/auction?${params.toString()}`);
     }
+
     /**
-     * @param page (default: 0) The page of auctions to return
-     * @returns {ActiveAuctionsResponse} Returns the currently active auctions sorted by last updated first and paginated.
+     * Active auctions, sorted by last updated, paginated. Does not require API key.
+     * @param page Page number (default 0). 404 if page does not exist.
      * @link https://api.hypixel.net/#tag/SkyBlock/paths/~1v2~1skyblock~1auctions/get
-    */
+     */
     async activeAuctions(page: number = 0): Promise<ActiveAuctionsResponse> {
         const params = new URLSearchParams({ page: page.toString() });
-
-        return this.client.doGet<ActiveAuctionsResponse>(
-            `skyblock/auctions?${params.toString()}`
-        );
+        return this.client.doGet<ActiveAuctionsResponse>(`skyblock/auctions?${params.toString()}`);
     }
 
     /**
-     * @returns {RecentlyEndedAuctionsResponse} SkyBlock auctions which ended in the last 60 seconds.
+     * SkyBlock auctions which ended in the last 60 seconds. Does not require API key.
      * @link https://api.hypixel.net/#tag/SkyBlock/paths/~1v2~1skyblock~1auctions_ended/get
      */
-    async recentlyEndedAuctions(): Promise<BaseResponse> {
-        return this.client.doGet<BaseResponse>(
-            `skyblock/auctions_ended`
-        );
+    async recentlyEndedAuctions(): Promise<RecentlyEndedAuctionsResponse> {
+        return this.client.doGet<RecentlyEndedAuctionsResponse>("skyblock/auctions_ended");
     }
 }

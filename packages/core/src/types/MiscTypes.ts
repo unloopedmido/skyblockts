@@ -17,10 +17,10 @@ export interface Mayor extends BaseMayor {
 export interface BingoGoal {
     id: string;
     name: string;
+    lore: string;
+    fullLore: readonly string[];
     tiers: number[];
     progress: number;
-    lore: string;
-    fullLore: string[];
     requiredAmount?: number;
 }
 
@@ -33,7 +33,8 @@ export interface NewsItem {
 
 export interface GardenItem {
     uuid: string;
-    unlocked_plot_ids: string[];
+    /** Unlocked plot IDs (API field: unlocked_plots_ids). */
+    unlocked_plots_ids: string[];
     commission_data: {
         [key: string]: any;
     };

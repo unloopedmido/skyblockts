@@ -12,7 +12,7 @@ interface CollectionsResponse extends BaseResponse {
 }
 
 interface ItemsResponse extends BaseResponse {
-    readonly items: Record<string, ItemItem>;
+    readonly items: readonly ItemItem[];
 }
 
 interface SkillsResponse extends BaseResponse {

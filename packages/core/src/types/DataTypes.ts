@@ -12,16 +12,19 @@ export type ItemTier =
 
 export interface ItemItem {
     material: string;
-    durability: number;
-    skin: {
-        value: string;
-        signature: string;
-    };
     name: string;
     category: string;
     tier: ItemTier;
-    npm_sell_price: number;
+    npc_sell_price: number;
     id: string;
+    /** Optional; present on some items. */
+    durability?: number;
+    /** Optional; present on some items. */
+    skin?: { value: string; signature: string };
+    /** Optional; colour code e.g. "255,215,0". */
+    color?: string;
+    /** Optional; e.g. { DEFENSE: 75, HEALTH: 20 }. */
+    stats?: Record<string, number>;
 }
 
 export interface Collection {

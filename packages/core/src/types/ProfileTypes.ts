@@ -18,14 +18,15 @@ export interface Member {
 
 export interface Banking {
     balance: number;
-    transactions: { amount: number, timestamp: number, action: string, initiator_name: string }[];
+    transactions: readonly { amount: number; timestamp: number; action: string; initiator_name: string }[];
 }
 
 export interface MuseumMember {
     value: number;
     appraisal: boolean;
     items: Record<string, MuseumItem>;
-    special: Record<string, MuseumItem>;
+    /** API returns an array (e.g. special slots). */
+    special: readonly unknown[] | Record<string, MuseumItem>;
 }
 
 export interface MuseumItem {
@@ -35,8 +36,10 @@ export interface MuseumItem {
     items: { type: number; data: string; }
 }
 
+/** Bingo event participation for a player (skyblock/bingo by uuid). */
 export interface BingoEvent {
     key: number;
     points: number;
-    completed_goals: string[];
+    /** Goal identifiers; may be nested arrays e.g. [["stat_walk_speed", "KILL_TRAPPER_MOB"]]. */
+    completed_goals: readonly (readonly string[])[];
 }

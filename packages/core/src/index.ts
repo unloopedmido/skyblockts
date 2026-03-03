@@ -8,6 +8,8 @@ export const misc = defaultClient.misc;
 export const profile = defaultClient.profile;
 
 export * from "./CoreClient";
+export { Fetcher } from "./utils/fetcher";
+export type { RateLimitHeaders } from "./utils/fetcher";
 export * from "./modules/Auction";
 export * from "./modules/Bazaar";
 export * from "./modules/Data";

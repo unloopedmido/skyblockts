@@ -11,11 +11,12 @@ type ElectionAndMayorResponse = Readonly<{
 type CurrentBingoEventResponse = Readonly<{
     success: boolean;
     lastUpdated: number;
+    id: number;
     name: string;
     start: number;
     end: number;
     modifier: string;
-    goals: BingoGoal[];
+    goals: readonly BingoGoal[];
 }>;
 
 type NewsResponse = Readonly<{
@@ -65,7 +66,11 @@ export class Misc {
      * @returns {ActiveUpcomingFireSalesResponse} Retrieve the currently active or upcoming Fire Sales for SkyBlock.
      * @link https://api.hypixel.net/#tag/SkyBlock/paths/~1v2~1skyblock~1firesales/get
      */
+    /**
+     * Currently active or upcoming Fire Sales. Does not require API key.
+     * @link https://api.hypixel.net/#tag/SkyBlock/paths/~1v2~1skyblock~1firesales/get
+     */
     async activeUpcomingFireSales(): Promise<ActiveUpcomingFireSalesResponse> {
-        return this.client.fetcher.fetch<ActiveUpcomingFireSalesResponse>(`skyblock/firesales`)
+        return this.client.doGet<ActiveUpcomingFireSalesResponse>("skyblock/firesales");
     }
 }
