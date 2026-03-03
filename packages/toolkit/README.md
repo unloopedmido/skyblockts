@@ -5,7 +5,7 @@ High‑level, cached and convenient utility functions for Hypixel SkyBlock
 built on top of [@skyblock‑ts/core](https://www.npmjs.com/package/@skyblock-ts/core).
 
 [![npm version](https://img.shields.io/npm/v/@skyblock-ts/toolkit.svg)](https://www.npmjs.com/package/@skyblock-ts/toolkit)  
-[![MIT License](https://img.shields.io/npm/l/@skyblock-ts/toolkit.svg)](LICENSE)
+[![MIT License](https://img.shields.io/npm/l/@skyblock-ts/toolkit.svg)](../../LICENSE)
 
 ## Installation
 
@@ -61,7 +61,8 @@ async function main() {
   const news = await client.misc.getNews();
   const firesales = await client.misc.getFiresales();
 
-  // - Profile extras (museum, garden, bingo)
+  // - Profile extras (museum, garden, bingo) — use a profile ID from getProfileById / listProfilesByUuid
+  const profileId = active?.profile_id ?? "";
   const museum = await client.profiles.getMuseum(profileId);
   const bingoEvents = await client.profiles.getBingoData(uuid!);
 }
@@ -125,4 +126,4 @@ or peek at the source under [`src/`](https://github.com/…/packages/toolkit/src
 
 Made with ❤️ by [@unloopedmido](https://github.com/unloopedmido/skyblockts).
 
-MIT License - see [LICENSE](LICENSE).
+MIT License — see [LICENSE](../../LICENSE).

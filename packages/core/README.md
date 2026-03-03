@@ -3,7 +3,7 @@
 A zero‑opinion, fully typed TypeScript client for the Hypixel SkyBlock API.  
 Provides promise‑based methods for all SkyBlock endpoints with immutable (`readonly`) response types.
 
-[![npm version](https://img.shields.io/npm/v/@skyblock-ts/core.svg)](https://www.npmjs.com/package/@skyblock-ts/core) [![MIT License](https://img.shields.io/npm/l/@skyblock-ts/core.svg)](LICENSE)
+[![npm version](https://img.shields.io/npm/v/@skyblock-ts/core.svg)](https://www.npmjs.com/package/@skyblock-ts/core) [![MIT License](https://img.shields.io/npm/l/@skyblock-ts/core.svg)](../../LICENSE)
 
 ## Installation
 
@@ -77,7 +77,7 @@ example().catch(console.error);
 
 - **bazaar**
 
-  - `bazaar.get()`
+  - `bazaar.bazaar()`
 
 - **data**
 
@@ -87,16 +87,17 @@ example().catch(console.error);
 
 - **profile**
 
-  - `profile.profileById(profileId)`
+  - `profile.profileByUUID(profileId)`
   - `profile.profilesByPlayer(playerUuid)`
-  - `profile.bingoDataByPlayer(profileId)`
-  - `profile.gardenDataByProfileID(profileId)`
   - `profile.museumDataByProfileID(profileId)`
+  - `profile.gardenDataByProfileID(profileId)`
+  - `profile.bingoDataByPlayer(playerUuid)`
 
 - **misc**
   - `misc.news()`
   - `misc.electionAndMayor()`
   - `misc.currentBingoEvent()`
+  - `misc.activeUpcomingFireSales()`
 
 _All methods return immutable TypeScript objects with full `.d.ts` definitions._
 

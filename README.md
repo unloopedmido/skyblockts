@@ -50,9 +50,10 @@ High‑level, cached and convenient utilities on top of `@skyblock‑ts/core`:
 
 - In‑memory caching with configurable TTL  
 - Auction helpers (fetch all pages, filter, lowest BIN, averages)  
-- Profile lookups (name→UUID, list & active profile, skills/dungeons)  
+- Profile lookups (name→UUID, list & active profile, museum, garden, bingo)  
 - Bazaar helpers (list products, lookup individual items)  
-- …and more modules coming soon!
+- Data helpers (items, collections, skills by id)  
+- Misc helpers (news, election, bingo event, firesales)
 
 [![npm version](https://img.shields.io/npm/v/@skyblock-ts/toolkit.svg)](https://www.npmjs.com/package/@skyblock-ts/toolkit)
 
@@ -86,7 +87,7 @@ async function example() {
   });
   console.log("Cheap BIN swords:", filtered.length);
 
-  const best = await tk.auctions.lowestBin({ itemName: "ENCHANTED_GOLD" });
+  const best = await tk.auctions.lowestBIN({ itemName: "ENCHANTED_GOLD" });
   console.log("Lowest ENCHANTED_GOLD BIN:", best?.starting_bid);
 
   // Profiles
@@ -117,8 +118,8 @@ example().catch(console.error);
 
 - `all(): Promise<AuctionItem[]>`  
 - `get(filter: AuctionFilter): Promise<AuctionItem[]>`  
-- `lowestBin(filter: AuctionFilter): Promise<AuctionItem \| null>`  
-- `lowestBins(filters: AuctionFilter[]): Promise<Record<string, number>>`  
+- `lowestBIN(filter: AuctionFilter): Promise<AuctionItem \| null>`  
+- `lowestBINs(filters: AuctionFilter[]): Promise<Record<string, number>>`  
 - `averagePrice(filter: AuctionFilter): Promise<number>`
 
 **Profiles**  
@@ -127,12 +128,16 @@ example().catch(console.error);
 - `listProfilesByUuid(uuid: string): Promise<ProfileItem[]>`  
 - `listProfilesByName(name: string): Promise<ProfileItem[]>`  
 - `getProfileById(profileId: string): Promise<ProfileItem \| null>`  
-- `getActiveProfile(uuid: string): Promise<ProfileMember \| null>`
+- `getActiveProfile(uuid: string): Promise<ProfileItem \| null>`
 
 **Bazaar**  
 
 - `listProducts(): Promise<Record<string, BazaarItem>>`  
-- `getProduct(key: string): Promise<BazaarItem \| null>`
+- `getProduct(key: string): Promise<BazaarItem \| null>`
+
+**Data** – `listItems()`, `getItemById(id)`, `getItemsByMaterial(material)`, `listCollections()`, `getCollection(id)`, `listSkills()`, `getSkill(id)`
+
+**Misc** – `getNews()`, `getElection()`, `getCurrentBingoEvent()`, `getFiresales()`
 
 > **Cache**: Results are cached in memory for `cacheTTL` ms (default: 3 minutes).  
 > **Batching**: Auction pages are fetched in parallel in chunks of `batchSize` (default: 10).
@@ -160,7 +165,7 @@ We welcome issues, suggestions, and pull requests:
 
 1. Fork & create a branch  
 2. Commit with clear, atomic messages  
-3. Run `pnpm lint && pnpm test`  
+3. Run `pnpm build && pnpm test`  
 4. Open a PR against `main`
 
 See [LICENSE](LICENSE) for licensing details.  
