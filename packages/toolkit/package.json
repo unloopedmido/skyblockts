@@ -35,6 +35,6 @@
 		"directory": "packages/toolkit"
 	},
 	"dependencies": {
-		"@skyblock-ts/core": "^0.1.0"
+		"@skyblock-ts/core": "workspace:^"
 	}
 }

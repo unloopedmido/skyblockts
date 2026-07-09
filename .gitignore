@@ -8,7 +8,8 @@ old/
 *.zip
 *.tar.gz
 *-lock.json
-*-lock.yaml
 *.lock
+# Keep the pnpm lockfile tracked for reproducible CI installs.
+!pnpm-lock.yaml
 .env
 .npmrc
