@@ -100,7 +100,7 @@ export class Profiles {
     /**
      * Museum data for all members of the profile (cached). Requires API key.
      */
-    async getMuseum(profileId: string): Promise<Record<string, MuseumMember> | null> {
+    async getMuseum(profileId: string): Promise<MuseumMember | null> {
         return this.client.getCached(`museum:${profileId}`, async () => {
             const res = await this.client.core.profile.museumDataByProfileID(profileId);
             return res.profile ?? null;
