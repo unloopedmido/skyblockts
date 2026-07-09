@@ -31,26 +31,58 @@ export interface NewsItem {
     title: string;
 }
 
+export interface GardenCommissionData {
+    visits: Record<string, number>;
+    completed: Record<string, number>;
+    total_completed: number;
+    unique_npcs_served: number;
+}
+
+export interface GardenCommissionRequirement {
+    original_item: string;
+    original_amount: number;
+    item: string;
+    amount: number;
+}
+
+export interface GardenCommissionExtraReward {
+    candy: string;
+}
+
+export interface GardenActiveCommission {
+    requirement: GardenCommissionRequirement[];
+    status: string;
+    position: number;
+    extra_rewards?: GardenCommissionExtraReward[];
+}
+
+export interface GardenComposterUpgrades {
+    speed: number;
+    multi_drop: number;
+    fuel_cap: number;
+    organic_matter_cap: number;
+    cost_reduction: number;
+}
+
+export interface GardenComposterData {
+    organic_matter: number;
+    fuel_units: number;
+    compost_units: number;
+    compost_items: number;
+    conversion_ticks: number;
+    last_save: number;
+    upgrades: GardenComposterUpgrades;
+}
+
 export interface GardenItem {
     uuid: string;
-    /** Unlocked plot IDs (API field: unlocked_plots_ids). */
     unlocked_plots_ids: string[];
-    commission_data: {
-        [key: string]: any;
-    };
-    active_commissions: {
-        [key: string]: any;
-    };
+    commission_data: GardenCommissionData;
+    active_commissions: Record<string, GardenActiveCommission>;
     garden_experience: number;
-    composter_data: {
-        [key: string]: any;
-    }
-    resources_collected: {
-        [key: string]: number;
-    };
+    composter_data: GardenComposterData;
+    resources_collected: Record<string, number>;
     unlocked_barn_skins: string[];
     selected_barn_skin: string;
-    crop_upgrade_levels: {
-        [key: string]: number;
-    }
+    crop_upgrade_levels: Record<string, number>;
 }

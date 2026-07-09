@@ -14,7 +14,7 @@ type ProfilesByPlayerResponse = Readonly<{
 
 type MuseumDataByProfileIDResponse = Readonly<{
     success: boolean
-    profile: Readonly<Record<string, MuseumMember>>
+    profile: MuseumMember
 }>
 
 type GardenDataByProfileIDResponse = Readonly<{

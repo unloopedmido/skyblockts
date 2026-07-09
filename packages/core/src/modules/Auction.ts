@@ -3,7 +3,6 @@ import type { AuctionItem, EndedAuction } from "../types/AuctionTypes";
 
 type RequestAuctionsResponse = Readonly<{
     success: boolean;
-    lastUpdated: number;
     auctions: AuctionItem[];
 }>;
 

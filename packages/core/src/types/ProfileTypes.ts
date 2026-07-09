@@ -5,6 +5,7 @@ export interface ProfileItem {
     banking: Banking;
     cute_name: string;
     selected: boolean;
+    game_mode?: string;
 }
 
 export interface CommunityUpgrades {
