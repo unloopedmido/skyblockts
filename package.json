@@ -1,6 +1,6 @@
 {
 	"private": false,
-	"packageManager": "pnpm@10.8.1",
+	"packageManager": "pnpm@11.10.0",
 	"license": "MIT",
 	"workspaces": [
 		"packages/*"
@@ -12,14 +12,16 @@
 		"format": "pnpm -r run format"
 	},
 	"devDependencies": {
-		"@types/node": "^22.14.1",
-		"@vitest/ui": "^3.1.1",
-		"eslint": "^9.24.0",
+		"@eslint/js": "^10.0.1",
+		"@types/node": "^26.1.1",
+		"@vitest/ui": "^4.1.10",
+		"eslint": "^10.6.0",
 		"husky": "^9.1.7",
-		"prettier": "^3.5.3",
-		"tsup": "^8.4.0",
-		"typescript": "^5.8.3",
-		"vitest": "^3.1.1"
+		"prettier": "^3.9.4",
+		"tsup": "^8.5.1",
+		"typescript": "^6.0.3",
+		"typescript-eslint": "^8.63.0",
+		"vitest": "^4.1.10"
 	},
 	"keywords": [
 		"hypixel",
@@ -45,6 +47,6 @@
 		"url": "https://github.com/sponsors/nonlooped"
 	},
 	"engines": {
-		"node": ">=16.0.0"
+		"node": ">=18.0.0"
 	}
 }
