@@ -17,9 +17,9 @@ export class Profiles {
     async uuidForName(name: string): Promise<string | null> {
         try {
             return this.client.getCached(`uuid:${name}`, async () => {
-                const response = await fetch(`https://api.mojang.com/users/profiles/minecraft/${name}`);
+                const response = await fetch(`https://api.ashcon.app/mojang/v2/user/${name}`);
 
-                return (await response.json()).id ?? null;
+                return (await response.json()).uuid ?? null;
             });
         } catch (error) {
             console.error("Error fetching UUID for name:", error);
