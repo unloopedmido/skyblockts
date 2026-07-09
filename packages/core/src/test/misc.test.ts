@@ -35,7 +35,10 @@ describe("Miscellaneous Module", () => {
         const invalidClient = new CoreClient({
             APIKey: "INVALID_API_KEY",
         });
-    
-        await expect(invalidClient.misc.news()).rejects.toThrow("Hypixel API key is invalid or does not exist.");
+
+        // news() needs no auth, so use a key-requiring endpoint to actually exercise the 403 path.
+        await expect(
+            invalidClient.profile.profilesByPlayer("fe4765681cc24821bc6074d0e0458e1f"),
+        ).rejects.toThrow("Hypixel API key is invalid or does not exist.");
     });
 })

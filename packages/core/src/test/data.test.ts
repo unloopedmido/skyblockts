@@ -11,7 +11,7 @@ describe("Data Module", () => {
         const firstCollection = Object.values(collectionData.collections)[0];
         expect(firstCollection).toHaveProperty("name");
         expect(firstCollection).toHaveProperty("items");
-    });
+    }, 10000);
 
     it("fetches and returns items data", async () => {
         const itemsData = await data.items();
@@ -22,7 +22,7 @@ describe("Data Module", () => {
         const firstItem = Object.values(itemsData.items)[0];
         expect(firstItem).toHaveProperty("name");
         expect(firstItem).toHaveProperty("material");
-    });
+    }, 10000);
 
     it("fetches and returns skills data", async () => {
         const skillsData = await data.skills();
@@ -33,5 +33,5 @@ describe("Data Module", () => {
         const firstSkill = Object.values(skillsData.skills)[0];
         expect(firstSkill).toHaveProperty("name");
         expect(firstSkill).toHaveProperty("levels");
-    });
-}, { timeout: 10000 })
+    }, 10000);
+})

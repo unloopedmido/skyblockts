@@ -5,6 +5,9 @@ import 'dotenv/config';
 const client = new CoreClient({ APIKey: process.env.HYPIXEL_API_KEY })
 const auction = client.auction;
 
+// Requesting a specific auction by uuid requires a valid API key.
+const hasKey = !!process.env.HYPIXEL_API_KEY;
+
 describe('Auction Module', () => {
     it('fetches for the third page of active auctions', async () => {
         const thirdPage = await auction.activeAuctions(3);
@@ -18,7 +21,7 @@ describe('Auction Module', () => {
         expect(firstAuction).toHaveProperty('item_name');
     }, 10000);
 
-    it('fetches page 1 and fetches a random auction from it', async () => {
+    it.skipIf(!hasKey)('fetches page 1 and fetches a random auction from it', async () => {
         const firstPage = await auction.activeAuctions(1);
         expect(firstPage).toBeDefined();
 
